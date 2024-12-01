@@ -33,7 +33,7 @@ class UserSessionController extends Controller
             );
 
         } catch (Exception $e) {
-            Log::error('Login failed: '.$e->getMessage().' in '.$e->getFile().' on line '.$e->getLine().' with code '.$e->getCode());
+            logError('Login failed:', $e);
             return response()->json(
                 ['message' => 'Login failed. Please try again later.'],
                 500
@@ -51,7 +51,7 @@ class UserSessionController extends Controller
                 ], 200
             );
         }catch (Exception $e){
-            Log::error('Logout failed: '.$e->getMessage().' in '.$e->getFile().' on line '.$e->getLine().' with code '.$e->getCode());
+            logError('Logout failed:', $e);
             return response()->json(
                 ['message' => 'Logout failed. Please try again later.'],
                 500

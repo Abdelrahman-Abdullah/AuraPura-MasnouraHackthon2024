@@ -6,7 +6,8 @@ use App\Http\Controllers\API\v1\{
     UserRegisterController,
     UserSessionController,
     VerifyEmailController,
-    GoogleLoginController
+    GoogleLoginController,
+    ProfileController
 };
 
 #region Users
@@ -21,6 +22,13 @@ Route::prefix('users')
 
         Route::middleware('auth:sanctum')->group(function () {
             Route::post('/logout', [UserSessionController::class,'logout'])->name('logout');
+
+            Route::controller(ProfileController::class)
+            ->group(function () {
+                Route::get('/profile','show')->name('profile.show');
+                Route::put('/profile/update','update')->name('profile.update');
+
+            });
         });
 
     });
