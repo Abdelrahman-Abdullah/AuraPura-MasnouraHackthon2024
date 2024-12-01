@@ -27,7 +27,7 @@ class UserSessionController extends Controller
             return response()->json(
                 [
                     'message' => 'Login successful',
-                    'user' => $user,
+                    'user' => new UserResource($user),
                     'token' => $token
                 ], 200
             );
