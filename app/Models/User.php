@@ -70,4 +70,17 @@ class User extends Authenticatable implements MustVerifyEmail
         // Send OTP via email (you can use any mail implementation here)
         Mail::to($email)->send(new \App\Mail\VerifyEmail($otp,5));
     }
+
+
+         /**
+         * Get all of the progress for the User
+         *
+         * @return \Illuminate\Database\Eloquent\Relations\HasMany
+         */
+
+        public function progress(): HasMany
+        {
+            return $this->hasMany(Progress::class);
+        }
+    
 }

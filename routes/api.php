@@ -7,7 +7,8 @@ use App\Http\Controllers\API\v1\{
     UserSessionController,
     VerifyEmailController,
     GoogleLoginController,
-    ProfileController
+    ProfileController,
+    ProgressController
 };
 
 #region Users
@@ -29,6 +30,8 @@ Route::prefix('users')
                 Route::put('/profile/update','update')->name('profile.update');
 
             });
+
+            Route::post('test', [ProgressController::class, 'store'])->name('test.store');
         });
 
     });
