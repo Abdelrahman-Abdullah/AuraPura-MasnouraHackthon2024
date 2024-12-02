@@ -1,9 +1,9 @@
 <?php
 
 namespace App\Http\Controllers\API\v1;
-
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\API\v1\TestStoreRequest;
 
 class ProgressController extends Controller
 {

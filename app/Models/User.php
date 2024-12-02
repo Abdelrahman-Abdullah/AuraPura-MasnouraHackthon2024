@@ -9,8 +9,8 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Laravel\Sanctum\HasApiTokens;
-
-class User extends Authenticatable implements MustVerifyEmail
+use Illuminate\Database\Eloquent\Relations\HasMany;
+class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable, HasApiTokens;
@@ -49,38 +49,10 @@ class User extends Authenticatable implements MustVerifyEmail
             'password' => 'hashed',
         ];
     }
-    public function sendEmailVerificationNotification()
+
+    public function progress(): HasMany
     {
-        $this->generateAndSendOtp();
+        return $this->hasMany(Progress::class);
     }
-
-    public function generateAndSendOtp($email)
-    {
-        // Generate an OTP
-        $otp = random_int(10000, 99999);
-
-        // Insert Otp code in otp table
-        DB::table('otp')
-            ->insert([
-                'email' => $email,
-                'otp' => $otp,
-                'expires_at' => now()->addMinutes(5),
-            ]);
-
-        // Send OTP via email (you can use any mail implementation here)
-        Mail::to($email)->send(new \App\Mail\VerifyEmail($otp,5));
-    }
-
-
-         /**
-         * Get all of the progress for the User
-         *
-         * @return \Illuminate\Database\Eloquent\Relations\HasMany
-         */
-
-        public function progress(): HasMany
-        {
-            return $this->hasMany(Progress::class);
-        }
     
 }

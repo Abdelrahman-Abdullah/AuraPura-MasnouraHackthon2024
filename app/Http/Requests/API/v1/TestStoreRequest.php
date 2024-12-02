@@ -22,7 +22,7 @@ class TestStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'reuired|string',
+            'title' => 'required|string',
             'score' => 'required|string'
         ];
     }

@@ -15,12 +15,30 @@ class UserRegisterController extends Controller
     {
         try {
               User::create($request->validated());
+              $this->generateAndSendOtp($request->email);
             return response()->json([
                 'message' => 'Verify Your Email!',
             ], 201);
         } catch (\Illuminate\Validation\ValidationException $e) {
             return response()->json(['message' => $e->errors()], 400);
         }
+    }
+
+    public function generateAndSendOtp($email)
+    {
+        // Generate an OTP
+        $otp = random_int(10000, 99999);
+
+        // Insert Otp code in otp table
+        DB::table('otp')
+            ->insert([
+                'email' => $email,
+                'otp' => $otp,
+                'expires_at' => now()->addMinutes(5),
+            ]);
+
+        // Send OTP via email (you can use any mail implementation here)
+        Mail::to($email)->send(new \App\Mail\VerifyEmail($otp,5));
     }
 
 }

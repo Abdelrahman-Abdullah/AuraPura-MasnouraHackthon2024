@@ -25,9 +25,8 @@ class VerifyEmailController extends Controller
                     ],401
                 );
             }
-            User::updateOrCreate(
-                ['email' => $email],
-                ['email_verified_at' => Carbon::now()]
+            $x = User::where('email', $email)->update(
+                ['email_verified_at' => date('Y-m-d H:i:s')]
             );
             DB::table('otp')->where('email', $email)->delete();
 

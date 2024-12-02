@@ -16,7 +16,7 @@ Route::prefix('users')
     ->as('users.')
     ->group(function () {
         Route::post('/register', UserRegisterController::class)->name('register');
-        Route::get('/verify-email', [VerifyEmailController::class,'verifyEmail'])->name('verify-email');
+        Route::post('/verify-email', [VerifyEmailController::class,'verifyEmail'])->name('verify-email');
         Route::post('/login', [UserSessionController::class,'login'])->name('login');
 
         Route::post('/login/google',[GoogleLoginController::class,'redirectToGoogle'])->name('login.google');
