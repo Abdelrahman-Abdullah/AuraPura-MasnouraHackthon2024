@@ -22,6 +22,17 @@ class UserSessionController extends Controller
             }
 
             $user = Auth::user();
+
+            if (!$user->email_verified_at) {
+                
+                return response()->json(
+                    [
+                        'message' => 'You need to Verify Your Email!',
+                    ], 401
+                );
+            }
+            
+        
             $token = $user->createToken('authToken')->plainTextToken;
 
             return response()->json(
